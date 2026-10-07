@@ -194,13 +194,13 @@ $('#deleteButton').addEventListener('click', () => {
   if (!deleteMode) { deleteMode = true; $('#deleteButton').classList.add('active'); $('#deleteButton').innerHTML = `${icon('trash')}刪除選取`; render(); toast('請勾選要刪除的活動，再按「刪除選取」。'); return; }
   const ids = [...document.querySelectorAll('.select-checkbox:checked')].map((node) => Number(node.dataset.id));
   if (!ids.length) { deleteMode = false; $('#deleteButton').classList.remove('active'); $('#deleteButton').innerHTML = `${icon('trash')}刪除活動`; render(); return; }
-  activities = activities.filter((item) => !ids.includes(item.id)); deleteMode = false; lastOmitted = [];
+  activities = activities.filter((item) => !ids.includes(item.id)); deleteMode = false;
   $('#deleteButton').classList.remove('active'); $('#deleteButton').innerHTML = `${icon('trash')}刪除活動`; render(); toast(`已刪除 ${ids.length} 項活動。`);
 });
 $('#activityList').addEventListener('click', (event) => {
   const edit = event.target.closest('button.edit'); const remove = event.target.closest('button.remove');
   if (edit) openDialog(activities.find((item) => item.id === Number(edit.dataset.id)));
-  if (remove) { activities = activities.filter((item) => item.id !== Number(remove.dataset.id)); lastOmitted = []; render(); toast('活動已刪除。'); }
+  if (remove) { activities = activities.filter((item) => item.id !== Number(remove.dataset.id)); render(); toast('活動已刪除。'); }
 });
 $('#activityType').addEventListener('change', () => { $('#activityVenue').value = TYPES[$('#activityType').value].venue; });
 $('#closeDialog').addEventListener('click', () => $('#activityDialog').close());
@@ -212,7 +212,7 @@ $('#activityForm').addEventListener('submit', (event) => {
   const existing = activities.find((item) => item.id === editingId);
   if (existing && existing.type === type && existing.start === candidate.start && existing.end === candidate.end && existing.venue === candidate.venue && existing.status === 'confirmed') candidate.status = 'confirmed';
   if (existing) activities = activities.map((item) => item.id === editingId ? candidate : item); else activities.push(candidate);
-  lastOmitted = [];
+  lastOmitted = lastOmitted.filter((omittedType) => omittedType !== type);
   $('#activityDialog').close(); render(); toast(existing ? '活動已更新。' : '活動已加入行程。');
 });
 $('#bookingButton').addEventListener('click', () => {
