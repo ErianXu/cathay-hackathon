@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#f6f8f7" />
     <title>AI 貴賓行程助理｜客戶端原型</title>
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./enhancements.css" />
   </head>
   <body>
     <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -43,8 +44,9 @@
         <section class="content">
           <div class="input-panel surface">
             <div class="section-heading"><div><span class="section-kicker">YOUR PLAN</span><h2>你想如何度過這段時間？</h2></div><span class="step-mark">01</span></div>
-            <div class="input-wrap"><textarea id="requestInput" aria-label="輸入你的行程需求" placeholder="例如：我想先洗澡、吃晚餐，再安排按摩……" rows="3">我想先洗澡、吃晚餐，再安排按摩，19:40 起飛。</textarea><button id="micButton" class="mic-button" type="button" aria-label="語音輸入" title="語音輸入"><svg><use href="#i-mic"/></svg></button></div>
-            <div class="input-bottom"><span class="input-hint">說出你的安排，或點選下方活動</span><span id="voiceStatus" class="voice-status" aria-live="polite"></span></div>
+            <div class="input-wrap"><textarea id="requestInput" aria-label="輸入你的行程需求" placeholder="例如：我想先洗澡、吃飯，再安排按摩……" rows="3"></textarea><button id="micButton" class="mic-button" type="button" aria-label="開始語音輸入" title="開始語音輸入"><svg><use href="#i-mic"/></svg></button></div>
+            <div class="input-bottom"><span class="input-hint">說出你的安排，或點選下方活動</span><label class="speech-language">語音語言 <select id="speechLang" aria-label="語音識別語言"><option value="zh-CN">普通話</option><option value="zh-HK">廣東話</option><option value="zh-TW">國語（繁體）</option></select></label></div>
+            <p id="voiceStatus" class="voice-feedback" role="status" aria-live="polite"></p>
             <div id="chips" class="chips" aria-label="快速加入活動"></div>
             <button id="generateButton" class="generate-button" type="button"><svg><use href="#i-spark"/></svg><span>AI 自動安排</span><svg class="generate-arrow"><use href="#i-chevron"/></svg></button>
           </div>
@@ -63,6 +65,7 @@
           <section class="itinerary surface" aria-labelledby="itineraryTitle">
             <div class="section-heading itinerary-heading"><div><span class="section-kicker">YOUR ITINERARY</span><h2 id="itineraryTitle">為你安排的行程</h2></div><button id="replanButton" class="text-button" type="button"><svg><use href="#i-refresh"/></svg>重新編排</button></div>
             <div id="planSummary" class="plan-summary" aria-live="polite"></div>
+            <div id="planWarnings" class="plan-warnings" role="status" aria-live="polite" hidden></div>
             <div id="activityList" class="activity-list"></div>
             <div class="itinerary-actions"><button id="addButton" class="outline-button" type="button"><svg><use href="#i-plus"/></svg>新增活動</button><button id="deleteButton" class="outline-button" type="button"><svg><use href="#i-trash"/></svg>刪除活動</button></div>
           </section>
