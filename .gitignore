@@ -1,0 +1,23 @@
+# Generated local databases and SQLite sidecars
+/data/
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.sqlite3-journal
+
+# Local credentials/configuration
+.env
+.env.*
+!.env.example
+node_modules/
+coverage/
+*.log
+.DS_Store
